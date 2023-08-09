@@ -6,7 +6,7 @@ const solvedac = require("./solvedacAPI.js");
 const app = express();
 app.use(express.static(path.join(__dirname,"./public")));
 
-app.get("/",(req,res)=>(res.sendFile(path.join(__dirname,"index.html"))));
+app.get("/",(req,res)=>(res.sendFile(path.join(__dirname,"./index.html"))));
 app.get("/api/baekjoon/",async (req,res)=>(await baekjoon.apiCall(req,res)));
 app.get("/api/solvedac/",async (req,res)=>(await solvedac.apiCall(req,res)));
 app.get('*',(req,res)=>(res.send("404 boiii").status(404)));
