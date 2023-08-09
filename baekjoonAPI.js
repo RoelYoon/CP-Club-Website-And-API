@@ -1,6 +1,6 @@
 const base = "api/baekjoon/"
 module.exports = {apiCall : async (req,res)=>{
-    switch(req.url.substring()){
+    switch(req.url.substring(base.length)){
         case 'get_status_message/':
             res.send('api implementation in development').status(200);
             break;
