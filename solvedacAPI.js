@@ -1,16 +1,16 @@
+const base = '/api/solvedac/';
 module.exports = {apiCall : async (req,res)=>{
-    const baseURL = req.baseUrL+'/api/solvedac/';
-    switch(req.url.substring(baseURL.length)){
-        case 'download/':
+    switch(req.url.substring(base.length)){
+        case 'download':
             res.send('api implementation in development').status(200);
             break;
-        case 'tierfinder/':
+        case 'tierfinder':
             res.send('api implementation in development').status(200);
             break;
-        case 'get_tier/':
+        case 'get_tier':
             res.send('api implementation in development').status(200);
             break;
-        case 'get_ac_rating/':
+        case 'get_ac_rating':
             res.send('api implementation in development').status(200);
             break;
         case 'get_exp':
