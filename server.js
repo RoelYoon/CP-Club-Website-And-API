@@ -24,7 +24,7 @@ async (req,res)=>{
 
 app.get("/api/baekjoon/solvedac/download/:url/:file_name",
 async (req,res)=>{
-    await solvedac.download(req,res);
+    await solvedac.apiCall(req,res);
 });
 
 app.get("/api/baekjoon/solvedac/:action/:user_name",
