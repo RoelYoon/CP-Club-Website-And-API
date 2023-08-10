@@ -1,23 +1,103 @@
-<!DOCTYPE>
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <link rel="stylesheet" href="styles.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="./images/cowLogo.png" type="image/icon type">
+        <title>CP Website</title>
     </head>
     <body>
-        <h1 id="header">CP Club Website</h1>
-        <ol>
+        <h1 id="header">Competitive Programming Club</h1>
+        <p style="margin:auto;margin-bottom:-20px;margin-top:-20px;background-image: url('/images/cow1.png'); height:100px; width:100px; background-size:cover;"></p>
+        <h2>API Tester</h2>
+        <p>***Scrapers for solved.ac and problems are currently broken***</p>
+        <input id="apiText" type="text">
+        <button id="apiCallButton">Call API</button>  
+        <ul>
             <li>
-                <a href="/api/baekjoon/get_rank">api test 1 (baekjoon)</a>
+                <h3>Baekjoon API</h3>
+                <ul>
+                <li>
+                    <p>/api/baekjoon/boj/get_status_message/:user_name</p>
+                </li>
+                <li>
+                    <p>/api/baekjoon/boj/get_rank/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/boj/get_correct_qs/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/boj/get_correct_q/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/boj/get_unsolved_qs/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/boj/get_unsolved_q/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/boj/get_submit_time/:user_name</p>            
+                </li>
+                </ul>
             </li>
             <li>
-                <a href="/api/baekjoon/get_correct_q">api test 2 (baekjoon)</a>
+                <h3>Problem API</h3>
+                <ul>
+                <li>
+                    <p>/api/baekjoon/problem/get_question/:id</p>
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_input/:id</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_output/:id</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_sample_input/:id</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_sample_output/:id</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_correct_rate/:id</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_time_limit/:id</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_memory_limit/:id</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/problem/get_random_question</p>            
+                </li>
+                </ul>
             </li>
             <li>
-                <a href="/api/solvedac/get_rank">api test 3 (solvedac)</a>
+                <h3>Solved.ac API</h3>
+                <ul>
+                <li>
+                    <p>/api/baekjoon/solvedac/get_tier/:user_name</p>
+                </li>
+                <li>
+                    <p>/api/baekjoon/solvedac/get_ac_rating/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/solvedac/get_exp/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/solvedac/get_rank/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/solvedac/get_rival_amount/:user_name</p>            
+                </li>
+                <li>
+                    <p>/api/baekjoon/solvedac/download/:url/:file_name</p>            
+                </li>
+                </ul>
             </li>
-            <li>
-                <a href="/api/solvedac/get_exp">api test 4 (solvedac)</a>
-            </li>
-        </ol>
+        </ul>
+        <p style="margin:auto;background-image: url('/images/cow1.png'); height:500px; width:500px; background-size:cover;"></p>
     </body>
+    <script src="index.js"></script>
 </html>
