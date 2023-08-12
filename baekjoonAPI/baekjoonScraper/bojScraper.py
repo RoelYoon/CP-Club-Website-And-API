@@ -3,9 +3,7 @@ import antiBotDetection
 import sys
 action = sys.argv[1]
 user = sys.argv[2]
-if action == "get_stats":
-    print(boj.get_stats(user,**antiBotDetection.protectionArgs))
-elif action == "get_rank":
+if action == "get_rank":
     print(boj.get_rank(user,**antiBotDetection.protectionArgs))
 elif action == "get_correct_qs":
     print(boj.get_correct_qs(user,**antiBotDetection.protectionArgs))

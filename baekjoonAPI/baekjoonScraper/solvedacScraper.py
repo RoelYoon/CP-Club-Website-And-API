@@ -11,6 +11,4 @@ elif action == "get_exp":
     print(solvedac.get_exp(user,**antiBotDetection.protectionArgs))
 elif action == "get_rank":
     print(solvedac.get_rank(user,**antiBotDetection.protectionArgs))
-elif action == "get_rival_amount":
-    print(solvedac.get_rival_amount(user,**antiBotDetection.protectionArgs))
 sys.__stdout__.flush()

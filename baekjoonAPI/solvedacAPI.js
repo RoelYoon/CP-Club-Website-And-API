@@ -1,6 +1,6 @@
 const {spawn} = require("child_process");
 const path = require("path");
-const actions = new Set(["download","get_tier","get_ac_rating","get_exp","get_rank","get_rival_amount"]);
+const actions = new Set(["get_tier","get_ac_rating","get_exp","get_rank"]);
 module.exports = {apiCall : async (req,res)=>{
     if(actions.has(req.params["action"])){
         const scraper = spawn("python3",[path.join(__dirname,"/baekjoonScraper/solvedacScraper.py"), req.params["action"], req.params["user_name"]]);
