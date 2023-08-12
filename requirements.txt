@@ -1,1 +1,1 @@
-baekjoon-scraper==1.0.1
+baekjoon-scraper==1.0.2
