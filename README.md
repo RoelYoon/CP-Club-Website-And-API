@@ -33,6 +33,7 @@ HTTPS is not necessary as no sensitive information is shared.
 4. Run `git pull origin main`
 5. Install any updated dependencies
 6. Run `npm start`
+
 As long as you made the local repository using `git clone`, the `origin` of the repository is automatically assigned to this repository. 
 ## Automatic Deployment With Github Action (Optional) 
 
