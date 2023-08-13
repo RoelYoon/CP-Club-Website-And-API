@@ -13,6 +13,11 @@ If you are voted as an officier, we'll guide you with any unfamiliar topics
 - PostgreSQL
 - Web Scraping w/ Python + Beautiful Soup 
 
+## Why Make Our Own Web Server? 
+[Baekjoon](https://www.acmicpc.net/) and [solved.ac](https://solved.ac/) do not have APIs for their websites. So, in order to use data from these websites in our own website features, we had to create our own API service that retrieves the data by scraping the websites. However, the websites can easily detect us if we're scraping their websites too much, so we naturally also needed to implement a database to store the websites' scraped data in order to avoid scraping on every API request for the data.
+
+This complex API management necessarily calls for our own backend web server. The frontend can actually be implemented anywhere as long as it can access our backend server, but it is currently hosted on the same web server simply for code localization. If you find good reason to do so, you may host the frontend on any web host (details in [Modifying Frontend](#modifying-frontend) section).
+
 ## Setting Up The Web Server
 You can use a spare computer in your house with internet access or set up a virtual machine on a cloud platform service. [Google Cloud Platform's Compute Engine](https://cloud.google.com/compute) allows you to continuously run a virtual machine completely free as long as you follow the standards described in their [free-tier documentation](https://cloud.google.com/free/docs/free-cloud-features#compute). The VM also comes with a free external IP address, so hosting our web server on a cloud VM does not have any costs. Just be sure to not exceed their 1GB network egress monthly usage limit (details in [Managing Network Egress For GCP VM Usage Limit](#managing-network-egress-for-gcp-vm-usage-limit) section). 
 
@@ -57,7 +62,7 @@ However, hosting the frontend on the web server is quite problematic. A fresh we
 
 ![Cow](/../media/images/cow2.png)
 
-For example, this simple .png of a cow is over 5MB by itself. 
+For example, this simple .png of a cow is over 5MB by itself. Rendering this cow on a webpage just once would be using 0.5% of our entire *monthly* network egress. 
 
 I'll make *very* conservative estimates in order to make sure we won't be paying any unexpected bills. Let's say our web server deals with `100,000 HTTP requests` every month, with browser caching out of the equation. This is over `130 HTTP requests/hour`, which I believe is a safe overestimate for a highschool club website. 
 
