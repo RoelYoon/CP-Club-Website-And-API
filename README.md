@@ -19,7 +19,7 @@ If you are voted as an officier, the current officiers will guide you with any u
 This complex API management necessarily calls for our own backend web server. The frontend can actually be implemented anywhere as long as it can access our backend server, but it is currently hosted on the same web server simply for code localization. If you find good reason to do so, you may host the frontend on any web host (details in [Modifying Frontend](#modifying-frontend) section).
 
 ## Setting Up The Web Server
-You can use a spare computer in your house with internet access or set up a virtual machine on a cloud platform service. [Google Cloud Platform's Compute Engine](https://cloud.google.com/compute) allows you to continuously run a virtual machine completely free as long as you follow the standards described in their [free-tier documentation](https://cloud.google.com/free/docs/free-cloud-features#compute). The VM also comes with a free external IP address, so hosting our web server on a cloud VM does not have any costs. Just be sure to not exceed their 1GB network egress monthly usage limit (details in [Managing Network Egress For GCP VM Usage Limit](#managing-network-egress-for-gcp-vm-usage-limit) section). 
+You can use a spare computer in your house with internet access or set up a virtual machine on a cloud platform service. [Google Cloud Platform's Compute Engine](https://cloud.google.com/compute) allows you to continuously run a virtual machine completely free as long as you follow the standards described in their [free-tier documentation](https://cloud.google.com/free/docs/free-cloud-features#compute). The VM also comes with a free external IP address, so hosting our web server on a cloud VM does not have any costs. Just be sure to not exceed their `1GB` network egress monthly usage limit (details in [Managing Network Egress For GCP VM Usage Limit](#managing-network-egress-for-gcp-vm-usage-limit) section). 
 
 The web server's code for both backend and frontend is in this repository. Make sure to specify the correct IP:port for Node.js to listen at in [server.js](server.js) (know the difference between using a external vs internal IP address here. Using an internal IP address requires port forwarding). 
 
@@ -45,16 +45,16 @@ HTTPS is not necessary as no sensitive information is shared.
 
 As long as you made the local repository using `git clone`, the `origin` of the repository is automatically assigned to this repository. 
 ## Automatic Deployment With Github Action (Optional) 
-This section gives instructions on automating the [previous section](#updating-the-web-server).
+This section gives instructions on automating the steps in [updating the web server](#updating-the-web-server).
 
 ## Maintaining Baekjoon-Scraper Package
 This section gives instructions on fixing the [baekjoon-scraper python package](https://pypi.org/project/baekjoon-scraper/) in the case of changes to the baekjoon or solved.ac HTML layout. This package is a vital component of our baekjoon APIs, so being able to update this package is necessary.
 
 ## Modifying Frontend 
-Place all frontend files in the [public](public) folder. In the [public](public) folder, you are no longer in the Node.js environment. Work with your HTML, CSS, and JavaScript files as if you're in the client-side browser environment. 
+Keep all frontend files in the [public](public) folder. In the [public](public) folder, you are no longer in the Node.js environment. Work with your HTML, CSS, and JavaScript files as if you're in the client-side browser environment. 
 
 ## Managing Network Egress For GCP VM Usage Limit
-GCP's [free-tier](https://cloud.google.com/free/docs/free-cloud-features#compute) places a monthly usage limit of 1GB network egress on our free VM (ingress is unlimited). So how practical is web hosting with this limitation?
+GCP's [free-tier](https://cloud.google.com/free/docs/free-cloud-features#compute) places a monthly usage limit of `1GB` network egress on our free VM (ingress is unlimited). So how practical is web hosting with this limitation?
 
 The backend has no problems at all with this limitation. All of our API features cause minimal egress traffic. The largest source of egress in the backend are the HTTP requests sent to Baekjoon or Solved.ac for scraping purposes, but even these HTTP requests are minimized since we only need to scrape the data when we're updating the PostgreSQL database on our web server, which is currently only done every three hours.
 
@@ -62,14 +62,14 @@ However, hosting the frontend on the web server is quite problematic. A fresh we
 
 ![Cow](/../media/images/cow2.png)
 
-For example, this simple .png of a cow is over 5MB by itself. Rendering this cow on a webpage just once would be using 0.5% of our entire *monthly* network egress. 
+For example, this simple .png of a cow is over `5MB` by itself. Rendering this cow on a webpage just once would be using `0.5%` of our entire *monthly* network egress. 
 
 I'll make *very* conservative estimates in order to make sure we won't be paying any unexpected bills. Let's say our web server deals with `100,000 HTTP requests` every month, with browser caching out of the equation. This is over `130 HTTP requests/hour`, which I believe is a safe overestimate for a highschool club website. 
 
-With this rate, we can figure out how much network egress each HTTP response should have: 
+With this rate, we can figure out the maximum network egress each HTTP response should take: 
 
 `1GB / 100000 HTTP Responses = 10KB / 1 HTTP Response`. 
 
-So in each HTTP response, we should send at most 10KB of data. This is a feasible amount to work with: if we again make the quite conservative assumption that a webpage's HTML, CSS, and JavaScript files each have 300 lines of code with around 25 chracters per line, a HTTP response containing all the webpage's files will be only about 7.5KB. 
+So in each HTTP response, we should send at most 10KB of data. This is a feasible amount to work with: if we again make the quite conservative assumption that a webpage's HTML, CSS, and JavaScript files each have 300 lines of code with around 25 chracters per line, a HTTP response containing all the webpage's files will be only about `7.5KB`. 
 
-Remember, this is a very conservative estimate too. Most browsers will automatically cache HTTP responses from our web server, and it is unlikely the number of HTTP requests will even approach `50,000 HTTP requests/month`. 
+Remember, this is a very conservative estimate too. Most browsers will automatically cache HTTP responses from our web server, and it is unlikely the number of HTTP requests will even approach `50,000 HTTP requests/month`, so we realistically have `>20KB / 1 HTTP Response`.
