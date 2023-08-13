@@ -18,6 +18,10 @@ You can use a spare computer in your house with internet access or set up a virt
 
 The web server's code for both backend and frontend is in this repository. Make sure to specify the correct IP:port for Node.js to listen at in [server.js](server.js) (know the difference between using a external vs internal IP address here. Using an internal IP address requires port forwarding). 
 
+```
+app.listen(<PORT>, "<IP ADDRESS>", ()=>{console.log("Listening at IP <IP ADDRESS> port <PORT>")});
+```
+
 On the machine you have chosen as our web server, clone this repoistory using `git clone https://github.com/RoelYoon/CP-Club-Website-And-API.git`. Then, `cd` into the cloned repository and install the Node.js dependencies with `npm install` and Python dependencies with `python3 -m pip install -r requirements.txt` (make sure you're working with Python >=3).
 
 Finally, run `npm start`, and the web server should start listening for http requests at the specified IP:port. If you're using a VM, make sure to keep the process alive even after disconnecting. You can do this on Linux using [screen](https://linuxize.com/post/how-to-use-linux-screen/).
@@ -36,7 +40,7 @@ HTTPS is not necessary as no sensitive information is shared.
 
 As long as you made the local repository using `git clone`, the `origin` of the repository is automatically assigned to this repository. 
 ## Automatic Deployment With Github Action (Optional) 
-
+This section gives instructions on automating the [previous section](#updating-the-web-server)
 ## Fixing Baekjoon Scrapers
 
 ## Modifying Frontend 
