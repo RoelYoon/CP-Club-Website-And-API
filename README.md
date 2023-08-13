@@ -1,4 +1,4 @@
-# Maintenance Instructions For Future Officiers
+# Maintenance Instructions For Future KIS Officiers of Competitive Programming Club
 
 ## Prerequisite Knowledge
 If you are voted as an officier, we'll guide you with any unfamiliar topics
