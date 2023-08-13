@@ -49,9 +49,22 @@ This section gives instructions on fixing the [baekjoon-scraper python package](
 Place all frontend files in the [public](public) folder. In the [public](public) folder, you are no longer in the Node.js environment. Work with your HTML, CSS, and JavaScript files as if you're in the client-side browser environment. 
 
 ## Managing Network Egress For GCP VM Usage Limit
-GCP's [free-tier](https://cloud.google.com/free/docs/free-cloud-features#compute) places a monthly usage limit of 1GB network egress on our free VM (ingress is unlimited). So how practical is web hosting with this limitation? Let's look at some numbers. 
+GCP's [free-tier](https://cloud.google.com/free/docs/free-cloud-features#compute) places a monthly usage limit of 1GB network egress on our free VM (ingress is unlimited). So how practical is web hosting with this limitation?
+
+The backend has no problems at all with this limitation. All of our API features cause minimal egress traffic. The largest source of egress in the backend are the HTTP requests sent to Baekjoon or Solved.ac for scraping purposes, but even these HTTP requests are minimized since we only need to scrape the data when we're updating the PostgreSQL database on our web server, which is currently only done every three hours.
+
+However, hosting the frontend on the web server is quite problematic. A fresh webpage HTTP request will require us to send the necessary HTML, CSS, and JavaScript files for the webpage along with any media files (images, audios, videos, etc.) used on the webpage. While sending the webpage's HTML, CSS, and JavaScript files alone is manageable, media files are often quite large.
+
+![Cow](https://roelyoon.github.io/CP-Club-Website-And-API/images/cow2.png)
+
+For example, this simple .png of a cow is over 5MB by itself. 
 
 I'll make *very* conservative estimates in order to make sure we won't be paying any unexpected bills. Let's say our web server deals with `100,000 HTTP requests` every month, with browser caching out of the equation. This is over `130 HTTP requests/hour`, which I believe is a safe overestimate for a highschool club website. 
 
 With this rate, we can figure out how much network egress each HTTP response should have: 
+
 `1GB / 100000 HTTP Responses = 10KB / 1 HTTP Response`. 
+
+So in each HTTP response, we should send at most 10KB of data. This is a feasible amount to work with: if we again make the quite conservative assumption that a webpage's HTML, CSS, and JavaScript files each have 300 lines of code with around 25 chracters per line, a HTTP response containing all the webpage's files will be only about 7.5KB. 
+
+Remember, this is a very conservative estimate too. Most browsers will automatically cache HTTP responses from our web server, and it is unlikely the number of HTTP requests will even approach `50,000 HTTP requests/month`. 
