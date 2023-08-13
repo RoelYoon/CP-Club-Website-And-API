@@ -51,6 +51,7 @@ Place all frontend files in the [public](public) folder. In the [public](public)
 ## Managing Network Egress For GCP VM Usage Limit
 GCP's [free-tier](https://cloud.google.com/free/docs/free-cloud-features#compute) places a monthly usage limit of 1GB network egress on our free VM (ingress is unlimited). So how practical is web hosting with this limitation? Let's look at some numbers. 
 
-I'll make *very* conservative estimates in order to make sure we won't be paying any unexpected bills. Let's say our web server deals with 100,000 HTTP requests every month, with browser caching out of the equation. This is over 130 HTTP requests/hour, which I believe is a safe overestimate for a highschool club website. 
+I'll make *very* conservative estimates in order to make sure we won't be paying any unexpected bills. Let's say our web server deals with `100,000 HTTP requests` every month, with browser caching out of the equation. This is over `130 HTTP requests/hour`, which I believe is a safe overestimate for a highschool club website. 
 
-With this rate, we can figure out how much network egress each HTTP response should have: $1GB / 100000 HTTP Responses = 10KB / 1 HTTP Response$. 
+With this rate, we can figure out how much network egress each HTTP response should have: 
+`1GB / 100000 HTTP Responses = 10KB / 1 HTTP Response`. 
