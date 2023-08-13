@@ -66,7 +66,7 @@ However, hosting the frontend on the web server is quite problematic. A fresh we
 
 For example, this simple .png of a cow is over `5MB` by itself. Rendering this cow on a webpage just once would be using `0.5%` of our entire *monthly* network egress. Don't worry, though, we've designed a clever work-around. The solution is uploading all of our media content to [Github Pages](https://docs.github.com/en/pages) and using the pages' URLs to access our media content (if you're wondering why we're not hosting the entire frontend with this method, Github Pages only allows static webpages). 
 
-Create a repository and store only your media content there. Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Action` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../media/.github/workflows/deploy.yml). 
+Create a repository and store only your media content there. Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Action` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../media/.github/workflows/deploy.yml). [Our current media repository: https://github.com/RoelYoon/CP-Club-Website-Media]
 
 All we need to do is deploy the media content using Github Pages now, and we can use URLs from Github Pages to access our media content like https://roelyoon.github.io/CP-Club-Websit-Media/images/cow2.png. 
 
