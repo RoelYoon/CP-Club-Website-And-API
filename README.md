@@ -55,7 +55,7 @@ The backend has no problems at all with this limitation. All of our API features
 
 However, hosting the frontend on the web server is quite problematic. A fresh webpage HTTP request will require us to send the necessary HTML, CSS, and JavaScript files for the webpage along with any media files (images, audios, videos, etc.) used on the webpage. While sending the webpage's HTML, CSS, and JavaScript files alone is manageable, media files are often quite large.
 
-![Cow](https://roelyoon.github.io/CP-Club-Website-And-API/images/cow2.png)
+![Cow](/../media/images/cow2.png)
 
 For example, this simple .png of a cow is over 5MB by itself. 
 
