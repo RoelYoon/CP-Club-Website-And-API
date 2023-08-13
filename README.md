@@ -66,11 +66,16 @@ For example, this simple .png of a cow is over `5MB` by itself. Rendering this c
 
 Create a repository and store only your media content there (this can also be done in a branch, but it's not the intended use of branches). Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Action` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../media/.github/workflows/deploy.yml). 
 
-All we need to do is deploy the media content using Github Pages now, and we can use URLs from Github Pages to access our media content like https://roelyoon.github.io/CP-Club-Website-And-API/images/cow2.png. Let's cover how the deployment script works, so that you can add your own media content and deploy them to Github Pages. First, read over [Github Action's Documentation](https://docs.github.com/en/actions) to understand what Github Action is and how it functions. Now, let's look at our script:
+All we need to do is deploy the media content using Github Pages now, and we can use URLs from Github Pages to access our media content like https://roelyoon.github.io/CP-Club-Website-And-API/images/cow2.png. Let's cover how the deployment script works, so that you can add your own media content and deploy them to Github Pages. First, read over [Github Action's Documentation](https://docs.github.com/en/actions) to understand what Github Action is and how it functions. Now, let's look at our [script](/../media/.github/workflows/deploy.yml):
 
 ```
 name: Media hosting
 on: [push]
+```
+
+The `on:` field specifies when this script should run. Here, the script is specified to run whenever a push is made to the repository. 
+
+```
 jobs:
   # Build job
   build:
@@ -78,7 +83,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Compress action step
-        uses: a7ul/tar-action@v1.1.0  <- Here, we use an action that compresses all the files specified in `file` into a .tar.gz file.
+        uses: a7ul/tar-action@v1.1.0
         id: compress
         with:
           cwd: .
@@ -89,31 +94,36 @@ jobs:
         uses: actions/upload-pages-artifact@v2
         with:
           path: .
-  # Deploy job
-  deploy:
-    needs: build
+  ```
 
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
+  We're running this script in a Ubuntu operating system (it's a Linux distribution), but this does not really affect our code. We use an action to checkout our current repository. Next, we compress all the files in the paths specified in the files field to a .tar.gz file (which is something like a .zip file) using the [a7ul/tar-action](https://github.com/marketplace/actions/tar-action) action. This compression is necessary because it is the specified format when uploading with the [actions/upload-pages-artifact](https://github.com/actions/upload-pages-artifact) action. 
 
-    # Deploy to the github-pages environment
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  In the case you add more media content like videos and place them in a `videos` directory, you can simply add another path to this directory in the files parameter of the [a7ul/tar-action](https://github.com/marketplace/actions/tar-action) action: 
 
-    # Specify runner + deployment step
+```
+jobs:
+  # Build job
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
-```
+      - uses: actions/checkout@v3
+      - name: Compress action step
+        uses: a7ul/tar-action@v1.1.0
+        id: compress
+        with:
+          cwd: .
+          command: c
+          files: |
+              images
+              videos   <-- Here, added the new directory containing videos
+          outPath: images.tar.gz
+      - name: Building
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: .
+  ```
 
-https://github.com/actions/deploy-pages
-https://github.com/actions/upload-pages-artifact
-
+The rest of the script takes what you uploaded and deploys it to Github Pages using the [actions/deploy-pages](https://github.com/actions/deploy-pages) action. Once deployed, the media content will be accessible with Github Page's URLs, and our VM's network will never need to touch them. 
 
 So, with all the media content out of our egress network, is hosting the frontend on our webserver feasible now? Let's look at some numbers. 
 
