@@ -41,9 +41,16 @@ HTTPS is not necessary as no sensitive information is shared.
 As long as you made the local repository using `git clone`, the `origin` of the repository is automatically assigned to this repository. 
 ## Automatic Deployment With Github Action (Optional) 
 This section gives instructions on automating the [previous section](#updating-the-web-server).
-## Fixing Baekjoon Scrapers
+
+## Maintaining Baekjoon-Scraper Package
+This section gives instructions on fixing the [baekjoon-scraper python package](https://pypi.org/project/baekjoon-scraper/) in the case of changes to the baekjoon or solved.ac HTML layout. This package is a vital component of our baekjoon APIs, so being able to update this package is necessary.
 
 ## Modifying Frontend 
+Place all frontend files in the [public](public) folder. In the [public](public) folder, you are no longer in the Node.js environment. Work with your HTML, CSS, and JavaScript files as if you're in the client-side browser environment. 
 
 ## Managing Network Egress For GCP VM Usage Limit
+GCP's [free-tier](https://cloud.google.com/free/docs/free-cloud-features#compute) places a monthly usage limit of 1GB network egress on our free VM (ingress is unlimited). So how practical is web hosting with this limitation? Let's look at some numbers. 
 
+I'll make *very* conservative estimates in order to make sure we won't be paying any unexpected bills. Let's say our web server deals with 100,000 HTTP requests every month, with browser caching out of the equation. This is over 130 HTTP requests/hour, which I believe is a safe overestimate for a highschool club website. 
+
+With this rate, we can figure out how much network egress each HTTP response should have: $1GB / 100000 HTTP Responses = 10KB / 1 HTTP Response$. 
