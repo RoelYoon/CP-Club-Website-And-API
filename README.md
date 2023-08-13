@@ -62,14 +62,18 @@ However, hosting the frontend on the web server is quite problematic. A fresh we
 
 ![Cow](/../media/images/cow2.png)
 
-For example, this simple .png of a cow is over `5MB` by itself. Rendering this cow on a webpage just once would be using `0.5%` of our entire *monthly* network egress. 
+For example, this simple .png of a cow is over `5MB` by itself. Rendering this cow on a webpage just once would be using `0.5%` of our entire *monthly* network egress. Don't worry, though, we've designed a clever work-around. 
+
+Create a repository and store only your media content there. Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Actions` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../media/.github/workflows/deploy.yml). 
+
+So, with all the media content out of our egress network, is hosting the frontend on our webserver feasible now? Let's look at some numbers. 
 
 I'll make *very* conservative estimates in order to make sure we won't be paying any unexpected bills. Let's say our web server deals with `100,000 HTTP requests` every month, with browser caching out of the equation. This is over `130 HTTP requests/hour`, which I believe is a safe overestimate for a highschool club website. 
 
-With this rate, we can figure out the maximum network egress each HTTP response should take: 
+With this rate, we can figure out the maximum network egress each HTTP response should use: 
 
 `1GB / 100000 HTTP Responses = 10KB / 1 HTTP Response`. 
 
-So in each HTTP response, we should send at most 10KB of data. This is a feasible amount to work with: if we again make the quite conservative assumption that a webpage's HTML, CSS, and JavaScript files each have 300 lines of code with around 25 chracters per line, a HTTP response containing all the webpage's files will be only about `7.5KB`. 
+So in each HTTP response, we should send at most `10KB` of data. This is a feasible amount to work with: if we again make the quite conservative assumption that a webpage's HTML, CSS, and JavaScript files each have 300 lines of code with around 25 chracters per line, a HTTP response containing all the webpage's files will be only about `7.5KB`. 
 
 Remember, this is a very conservative estimate too. Most browsers will automatically cache HTTP responses from our web server, and it is unlikely the number of HTTP requests will even approach `50,000 HTTP requests/month`, so we realistically have `>20KB / 1 HTTP Response`.
