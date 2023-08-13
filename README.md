@@ -1,7 +1,7 @@
 # Maintenance Instructions For Future KIS Officiers of Competitive Programming Club
 
 ## Prerequisite Knowledge
-If you are voted as an officier, we'll guide you with any unfamiliar topics
+If you are voted as an officier, the current officiers will guide you with any unfamiliar topics
 - Git and Github
 - Basic foundation of web-development
   - Frontend
