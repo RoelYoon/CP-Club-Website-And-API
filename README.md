@@ -62,15 +62,15 @@ The backend has no problems at all with this limitation. All of our API features
 
 However, hosting the frontend on the web server is quite problematic. A fresh webpage HTTP request will require us to send the necessary HTML, CSS, and JavaScript files for the webpage along with any media files (images, audios, videos, etc.) used on the webpage. While sending the webpage's HTML, CSS, and JavaScript files alone is manageable, media files are often quite large.
 
-![Cow](/../../../../github/docs/CP-Club-Website-Media/main/images/cow2.png)
+![Cow](/../../RoelYoon/CP-Club-Website-Media/main/images/cow2.png)
 
 For example, this simple .png of a cow is over `5MB` by itself. Rendering this cow on a webpage just once would be using `0.5%` of our entire *monthly* network egress. Don't worry, though, we've designed a clever work-around. The solution is uploading all of our media content to [Github Pages](https://docs.github.com/en/pages) and using the pages' URLs to access our media content (if you're wondering why we're not hosting the entire frontend with this method, Github Pages only allows static webpages). 
 
-Create a repository and store only your media content there. Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Action` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../../../../github/docs/CP-Club-Website-Media/main/.github/workflows/deploy.yml). [Our current media repository: https://github.com/RoelYoon/CP-Club-Website-Media]
+Create a repository and store only your media content there. Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Action` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../../RoelYoon/CP-Club-Website-Media/main/.github/workflows/deploy.yml). [Our current media repository: https://github.com/RoelYoon/CP-Club-Website-Media]
 
 All we need to do is deploy the media content using Github Pages now, and we can use URLs from Github Pages to access our media content like https://roelyoon.github.io/CP-Club-Website-Media/images/cow2.png. 
 
-Let's cover how the deployment script works, so that you can add your own media content and deploy them to Github Pages. First, read over [Github Action's Documentation](https://docs.github.com/en/actions) to understand what Github Action is and how it functions. Now, let's look at our [script](/../../../../github/docs/CP-Club-Website-Media/main/.github/workflows/deploy.yml):
+Let's cover how the deployment script works, so that you can add your own media content and deploy them to Github Pages. First, read over [Github Action's Documentation](https://docs.github.com/en/actions) to understand what Github Action is and how it functions. Now, let's look at our [script](/../../RoelYoon/CP-Club-Website-Media/main/.github/workflows/deploy.yml):
 
 ```
 name: Media hosting
