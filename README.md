@@ -62,9 +62,58 @@ However, hosting the frontend on the web server is quite problematic. A fresh we
 
 ![Cow](/../media/images/cow2.png)
 
-For example, this simple .png of a cow is over `5MB` by itself. Rendering this cow on a webpage just once would be using `0.5%` of our entire *monthly* network egress. Don't worry, though, we've designed a clever work-around. 
+For example, this simple .png of a cow is over `5MB` by itself. Rendering this cow on a webpage just once would be using `0.5%` of our entire *monthly* network egress. Don't worry, though, we've designed a clever work-around. The solution is uploading all of our media content to [Github Pages](https://docs.github.com/en/pages) and using the pages' URLs to access our media content (if you're wondering why we're not hosting the entire frontend with this method, Github Pages only allows static webpages). 
 
-Create a repository and store only your media content there. Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Actions` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../media/.github/workflows/deploy.yml). 
+Create a repository and store only your media content there (this can also be done in a branch, but it's not the intended use of branches). Enable Github Pages on your repository by going in `Settings` -> `Pages` -> Selecting `Github Action` as your `Source`. If you're wondering why we're using Github Action, using the standard Github Pages deployment script wasn't properly uploading the media content, so we made [our own script](/../media/.github/workflows/deploy.yml). 
+
+All we need to do is deploy the media content using Github Pages now, and we can use URLs from Github Pages to access our media content like https://roelyoon.github.io/CP-Club-Website-And-API/images/cow2.png. Let's cover how the deployment script works, so that you can add your own media content and deploy them to Github Pages. First, read over [Github Action's Documentation](https://docs.github.com/en/actions) to understand what Github Action is and how it functions. Now, let's look at our script:
+
+```
+name: Media hosting
+on: [push]
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compress action step
+        uses: a7ul/tar-action@v1.1.0  <- Here, we use an action that compresses all the files specified in `file` into a .tar.gz file.
+        id: compress
+        with:
+          cwd: .
+          command: c
+          files: images
+          outPath: images.tar.gz
+      - name: Building
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: .
+  # Deploy job
+  deploy:
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
+```
+
+https://github.com/actions/deploy-pages
+https://github.com/actions/upload-pages-artifact
+
 
 So, with all the media content out of our egress network, is hosting the frontend on our webserver feasible now? Let's look at some numbers. 
 
