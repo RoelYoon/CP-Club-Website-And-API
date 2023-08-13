@@ -27,7 +27,12 @@ If you're using a GCP VM and HTTP requests are getting blocked by the firewall o
 HTTPS is not necessary as no sensitive information is shared. 
 
 ## Updating The Web Server
-Push changes to this repository -> kill the current web server process -> `cd` to repository on web server -> `git pull origin main` -> install any updated dependencies -> `npm start`
+1. Push changes to this repository
+2. Kill the current web server process
+3. `cd` to repository on web server
+4. Run `git pull origin main`
+5. Install any updated dependencies
+6. Run `npm start`
 
 ## Automatic Deployment With Github Action (Optional) 
 
